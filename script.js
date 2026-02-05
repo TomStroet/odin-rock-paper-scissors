@@ -35,35 +35,19 @@ function getHumanChoice() {
     return choice.toLowerCase()
 }
 
-function playRound(humanChoice, computerChoice) {
-    console.log(`You pick ${humanChoice}`)
-    console.log(`Computer picks ${computerChoice}`)
-
-    let result
-    if (humanChoice == computerChoice) {
-        result = 0
+function evaluateOutcome(humanChoice, computerChoice) {
+        if (humanChoice == computerChoice) {
+        return 0
     } else if (humanChoice == 'rock' && computerChoice == 'scissors' 
         || humanChoice == 'paper' && computerChoice == 'rock'
         || humanChoice == 'scissors' && computerChoice == 'paper') {
-        result = 1
+        return 1
     } else {
-        result = -1
+        return -1
     }
-
-    logResult(result)
-    updateScore(result)
 }
 
-function updateScore(result) {
-    if (result == 1) {
-        humanScore++;
-    } else if (result == -1) {
-        computerScore++;
-    }
-    console.log(`Score - You: ${humanScore} - Computer: ${computerScore}`);
-}
-
-function logResult(result) {
+function logResult(result, humanChoice, computerChoice) {
     if (result == 1) {
         console.log(`You win! ${humanChoice} beats ${computerChoice}.`)
     } else if (result == -1) {
@@ -71,8 +55,44 @@ function logResult(result) {
     } else console.log('Draw!')
 }
 
-let humanScore = 0, computerScore = 0
+function updateScore(outcome, score) {
+    if (outcome == 1) {
+        score[0]++;
+    } else if (outcome == -1) {
+        score[1]++;
+    }
+    console.log(`Score - You: ${score[0]} - Computer: ${score[1]}`);
+    return score
+}
 
-const humanChoice = getHumanChoice()
-const computerChoice = getComputerChoice()
-playRound(humanChoice, computerChoice)
+function playRound(score) {
+    const humanChoice = getHumanChoice()
+    const computerChoice = getComputerChoice()
+    console.log(`You pick ${humanChoice}`)
+    console.log(`Computer picks ${computerChoice}`)
+
+    outcome = evaluateOutcome(humanChoice, computerChoice)
+    logResult(outcome, humanChoice, computerChoice) 
+    return updateScore(outcome, score)
+}
+
+function playGame(rounds = 5) {
+
+    let score = Array(0, 0)
+    let round = 1
+
+    for (round; round <= rounds; round++) {
+        console.log(`Round ${round}`)
+        score = playRound(score)      
+    }
+
+    if (score[0] > score[1]) {
+        console.log(`Game finished! You win! ${score[0]} against ${score[1]}`)
+    } else if (score[0] < score[1]) {
+        console.log(`Game finished! You lose! ${score[0]} against ${score[1]}`)
+    } else {
+        console.log(`Game finished! It's a draw! ${score[0]} against ${score[1]}`)
+    }
+}        
+
+playGame()
