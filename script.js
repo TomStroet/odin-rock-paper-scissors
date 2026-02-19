@@ -24,10 +24,10 @@ Steps
 function getComputerChoice() {
     const randomPick = Math.random() * 3;
     if (randomPick < 1) {
-        return 'rock'
+        return 'Rock'
     } else if (randomPick < 2) {
-        return 'paper'
-    } else return 'scissors'
+        return 'Paper'
+    } else return 'Scissors'
 }
 
 function getHumanChoice() {
@@ -38,9 +38,9 @@ function getHumanChoice() {
 function evaluateOutcome(humanChoice, computerChoice) {
         if (humanChoice == computerChoice) {
         return 0
-    } else if (humanChoice == 'rock' && computerChoice == 'scissors' 
-        || humanChoice == 'paper' && computerChoice == 'rock'
-        || humanChoice == 'scissors' && computerChoice == 'paper') {
+    } else if (humanChoice == 'Rock' && computerChoice == 'Scissors' 
+        || humanChoice == 'Paper' && computerChoice == 'Rock'
+        || humanChoice == 'Scissors' && computerChoice == 'Paper') {
         return 1
     } else {
         return -1
@@ -65,15 +65,15 @@ function updateScore(outcome, score) {
     return score
 }
 
-function playRound(score) {
-    const humanChoice = getHumanChoice()
+function playRound(humanChoice) {
+    // const humanChoice = getHumanChoice()
     const computerChoice = getComputerChoice()
     console.log(`You pick ${humanChoice}`)
     console.log(`Computer picks ${computerChoice}`)
 
     outcome = evaluateOutcome(humanChoice, computerChoice)
     logResult(outcome, humanChoice, computerChoice) 
-    return updateScore(outcome, score)
+    // return updateScore(outcome, score)
 }
 
 function playGame(rounds = 5) {
@@ -98,7 +98,7 @@ function playGame(rounds = 5) {
 const buttons = document.querySelectorAll('#buttons button')
 buttons.forEach((button) => {
     button.addEventListener("click", (event) => {
-        console.log(event.target.innerText)
+        playRound(event.target.innerText);
     })
 });
 
