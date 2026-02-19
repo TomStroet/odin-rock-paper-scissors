@@ -95,4 +95,11 @@ function playGame(rounds = 5) {
     }
 }        
 
-playGame()
+const buttons = document.querySelectorAll('#buttons button')
+buttons.forEach((button) => {
+    button.addEventListener("click", (event) => {
+        console.log(event.target.innerText)
+    })
+});
+
+console.log('script finished')
