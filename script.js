@@ -55,6 +55,20 @@ function logResult(result, humanChoice, computerChoice) {
     } else console.log('Draw!')
 }
 
+function showResult(humanChoice, computerChoice, winner) {
+    let resultMsg = ''
+    if (winner == "human") {
+        resultMsg = `You win! ${humanChoice} beats ${computerChoice}.`
+    } else if (winner == "computer") {
+        resultMsg = `You lose! ${computerChoice} beats ${humanChoice}.`
+    } else resultMsg = 'Draw!'
+    
+    const results = document.querySelector(".results")
+    results.textContent = resultMsg
+
+}
+
+
 function updateScore(outcome, score) {
     if (outcome == 1) {
         score[0]++;
@@ -66,13 +80,24 @@ function updateScore(outcome, score) {
 }
 
 function playRound(humanChoice) {
-    // const humanChoice = getHumanChoice()
     const computerChoice = getComputerChoice()
     console.log(`You pick ${humanChoice}`)
     console.log(`Computer picks ${computerChoice}`)
 
-    outcome = evaluateOutcome(humanChoice, computerChoice)
-    logResult(outcome, humanChoice, computerChoice) 
+    let winner = ''
+    if (humanChoice == computerChoice) {
+        winner = 'draw'
+    } else if (humanChoice == 'Rock' && computerChoice == 'Scissors' 
+        || humanChoice == 'Paper' && computerChoice == 'Rock'
+        || humanChoice == 'Scissors' && computerChoice == 'Paper') {
+        winner = 'human' 
+    } else {
+        winner = 'computer'
+    }
+
+    showResult(humanChoice, computerChoice, winner)
+    // outcome = evaluateOutcome(humanChoice, computerChoice)
+    // logResult(outcome, humanChoice, computerChoice) 
     // return updateScore(outcome, score)
 }
 
